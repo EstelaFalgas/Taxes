@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Calculator</title>
+    <style>
+        /* Basic reset for margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="number"], input[type="radio"] {
+            margin-top: 5px;
+            width: 100%;
+            padding: 8px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .results {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        function checkChildren() {
+            // Get the value of numero_de_hijos
+            const numero_de_hijos = document.getElementById('numero_de_hijos').value;
+            // If numero_de_hijos is 0, set menores_de_3_años to 0 and disable the field
+            if (numero_de_hijos == 0) {
+                document.getElementById('menores_de_3_años').value = 0;
+                document.getElementById('menores_de_3_años').disabled = true;
+            } else {
+                document.getElementById('menores_de_3_años').disabled = false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Salary Calculator</h2>
+        <form action="/calculate/" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="bruto">Brute Salary:</label>
+            <input type="number" id="bruto" name="bruto" step="any" min="0" required>
+
+            <label for="tributacion_conjunta">Tributación Conjunta:</label>
+            <input type="radio" id="yes" name="tributacion_conjunta" value="true"> Yes
+            <input type="radio" id="no" name="tributacion_conjunta" value="false" checked> No
+
+            <label for="numero_de_hijos">Número de Hijos:</label>
+            <input type="number" id="numero_de_hijos" name="numero_de_hijos" min="0" required onchange="checkChildren()">
+
+            <label for="menores_de_3_años">Menores de 3 Años:</label>
+            <input type="number" id="menores_de_3_años" name="menores_de_3_años" value="0" min="0" required>
+
+            <input type="submit" value="Calculate">
+        </form>
+
+        {% if bruto %}
+        <h3>Result:</h3>
+        <p>Brute Salary: {{ bruto }}</p>
+        <p>Net Salary: {{ neto }}</p>
+        <p>Monthly Salary: {{ mensualidad }}</p>
+        <p>Taxes Paid: {{ impuestos }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
