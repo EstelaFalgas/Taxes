@@ -8,6 +8,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from irpf import Usuario
+ 
 
 app = FastAPI()
 
@@ -104,3 +105,9 @@ def calculate_salary(request: Request, data: UserInput = Depends(get_user_input)
         "impuestos": user.impuestos,
         "mensualidad": user.mensualidad
     })
+
+# This block ensures that Uvicorn runs your app on the specified port
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))  # Use 8000 for local development
+    uvicorn.run(app, host="0.0.0.0", port=port)
